@@ -4,7 +4,7 @@ import sounddevice as sd
 from vosk import Model, KaldiRecognizer
 
 SAMPLE_RATE = 16000
-MODEL_PATH = r".\models\vosk-model-small-en-us-0.15"
+MODEL_PATH = r".\models\vosk-model-en-us-0.22"
 
 def transcribe_window(seconds=4):
     model = Model(MODEL_PATH)
