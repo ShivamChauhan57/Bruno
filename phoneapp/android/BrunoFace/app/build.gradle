@@ -1,0 +1,29 @@
+plugins {
+  id 'com.android.application'
+  id 'org.jetbrains.kotlin.android'
+}
+
+android {
+  namespace 'com.example.brunoface'
+  compileSdk 34
+
+  defaultConfig {
+    applicationId 'com.example.brunoface'
+    minSdk 26
+    targetSdk 34
+    versionCode 1
+    versionName '0.3'
+  }
+
+  buildFeatures { viewBinding true }
+}
+
+dependencies {
+  implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.9.23'
+  implementation 'com.squareup.okhttp3:okhttp:4.12.0'              // WebSocket
+  implementation 'org.webrtc:google-webrtc:1.0.32006'               // WebRTC
+  implementation 'androidx.webkit:webkit:1.10.0'                    // WebView
+  implementation 'androidx.core:core-ktx:1.13.1'
+  implementation 'androidx.appcompat:appcompat:1.7.0'
+  implementation 'com.google.android.material:material:1.12.0'
+}

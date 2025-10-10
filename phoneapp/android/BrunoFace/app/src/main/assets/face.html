@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+  html,body { margin:0; background:#000; overflow:hidden; }
+  #c { display:block; width:100vw; height:100vh; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+function resize(){ canvas.width=innerWidth; canvas.height=innerHeight; }
+addEventListener('resize', resize); resize();
+
+let state = { expression:'blink', mouth:'flat', blink:{mode:'auto', period_ms:2500} };
+
+function draw(){
+  const w=canvas.width, h=canvas.height; ctx.clearRect(0,0,w,h);
+  ctx.fillStyle = '#001a14'; ctx.fillRect(0,0,w,h);           // bg
+  const blinkNow = state.expression==='blink';
+  const eyeH = blinkNow ? 6 : Math.max(20, h*0.06);
+  ctx.fillStyle = '#00ffd0';
+  ctx.fillRect(w*0.3-50, h*0.4-eyeH/2, 100, eyeH);
+  ctx.fillRect(w*0.7-50, h*0.4-eyeH/2, 100, eyeH);
+  ctx.fillStyle = '#ff6fb3';
+  const smile = state.mouth==='smile';
+  ctx.fillRect(w*0.5-80, h*0.65-(smile?10:3), 160, smile?20:6);
+  requestAnimationFrame(draw);
+}
+requestAnimationFrame(draw);
+
+// Called from Android to update state
+function updateFace(jsonStr){
+  try{ const msg = JSON.parse(jsonStr);
+    if(msg.target==='face'){
+      state.expression = msg.expression ?? state.expression;
+      state.mouth = msg.mouth ?? state.mouth;
+      state.blink = msg.blink ?? state.blink;
+    }
+  }catch(e){}
+}
+</script>
+</body>
+</html>
